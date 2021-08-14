@@ -1,5 +1,24 @@
 {% extends 'base.html' %}
 
+{% block title %}
+    Список дел
+{% endblock %}
+
 {% block content %}
-currenttodo
+    {% for todo in todos %}
+        <ul>
+            <li>
+                {% if todo.important %}
+                    <b>
+                {% endif %}
+                {{ todo }}
+                {% if todo.important %}
+                    </b>
+                {% endif %}
+                {% if todo.description %}
+                    - {{ todo.description }}
+                {% endif %}
+            </li>
+        </ul>
+    {% endfor %}
 {% endblock %}

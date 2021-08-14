@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>{% block title %} {% endblock %}</title>
 </head>
 <body>
 {% if user.is_authenticated %}
@@ -12,7 +12,7 @@
         <button type="submit">Выйти</button>
     </form>
 {% else %}
-    <a href="#">Войти</a>
+    <a href="{% url 'loginUser' %}">Войти</a>
     <a href="{% url 'signupUser' %}">Регистрация</a>
 {% endif %}
 <br>
