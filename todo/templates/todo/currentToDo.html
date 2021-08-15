@@ -8,16 +8,18 @@
     {% for todo in todos %}
         <ul>
             <li>
-                {% if todo.important %}
-                    <b>
-                {% endif %}
-                {{ todo }}
-                {% if todo.important %}
-                    </b>
-                {% endif %}
-                {% if todo.description %}
-                    - {{ todo.description }}
-                {% endif %}
+                <a href="{% url 'todo' todo.id %}">
+                    {% if todo.important %}
+                        <b>
+                    {% endif %}
+                    {{ todo }}
+                    {% if todo.important %}
+                        </b>
+                    {% endif %}
+                    {% if todo.description %}
+                        - {{ todo.description }}
+                    {% endif %}
+                </a>
             </li>
         </ul>
     {% endfor %}

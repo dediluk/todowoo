@@ -1,8 +1,10 @@
 from django.db import IntegrityError
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
+from django.utils import timezone
+
 from .forms import TodoForm
 from .models import Todo
 
@@ -66,4 +68,39 @@ def create(request):
         except ValueError:
             return render(request, 'todo/create.html',
                           {'form': TodoForm, 'error': 'Неверно введены данные. Попробуйте ещё раз'})
+        return redirect('currentToDo')
+
+
+def todo(request, todo_pk):
+    todo = get_object_or_404(Todo, pk=todo_pk, user=request.user)
+    if request.method == "GET":
+        form = TodoForm(instance=todo)
+        print('=================================')
+        return render(request, 'todo/ToDo.html', {'todo': todo, 'form': form})
+    else:
+        try:
+            form = TodoForm(request.POST, instance=todo)
+            form.save()
+            print('=================================')
+            return redirect('currentToDo')
+        except ValueError:
+            return render(request, 'todo/ToDo.html', {'todo': todo, 'form': form, 'error': 'Неверные данные'})
+
+
+def completeTodo(request, todo_pk):
+    todo = get_object_or_404(Todo, pk=todo_pk, user=request.user)
+    if request.method == "POST":
+        todo.dateCompleted = timezone.now()
+        todo.save()
+        return redirect('currentToDo')
+    else:
+        return redirect('currentToDo')
+
+
+def deleteTodo(request, todo_pk):
+    todo = get_object_or_404(Todo, pk=todo_pk, user=request.user)
+    if request.method == "POST":
+        todo.delete()
+        return redirect('currentToDo')
+    else:
         return redirect('currentToDo')
