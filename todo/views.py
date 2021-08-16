@@ -58,7 +58,7 @@ def loginUser(request):
 @login_required
 def currentToDo(request):
     todos = Todo.objects.filter(user=request.user, dateCompleted__isnull=True)
-    return render(request, 'todo/currentToDo.html', {'todos': todos})
+    return render(request, 'todo/currentToDo.html', {'todos': todos, 'current': 'active'})
 
 
 @login_required
@@ -71,7 +71,7 @@ def logoutUser(request):
 @login_required
 def create(request):
     if request.method == "GET":
-        return render(request, 'todo/create.html', {'form': TodoForm})
+        return render(request, 'todo/create.html', {'form': TodoForm, 'create': 'active'})
     else:
         try:
             form = TodoForm(request.POST)
@@ -80,7 +80,7 @@ def create(request):
             newTodo.save()
         except ValueError:
             return render(request, 'todo/create.html',
-                          {'form': TodoForm, 'error': 'Неверно введены данные. Попробуйте ещё раз'})
+                          {'form': TodoForm, 'error': 'Неверно введены данные. Попробуйте ещё раз', 'create': 'active'})
         return redirect('currentToDo')
 
 
@@ -135,4 +135,4 @@ def deleteTodo(request, todo_pk):
 @login_required
 def completedTodo(request):
     todos = Todo.objects.filter(user=request.user, dateCompleted__isnull=False).order_by('-dateCompleted')
-    return render(request, 'todo/completedTodo.html', {'todos': todos})
+    return render(request, 'todo/completedTodo.html', {'todos': todos, 'completed': 'active'})

@@ -31,14 +31,14 @@
             {% if user.is_authenticated %}
                 <ul class="navbar-nav mr-auto">
 
-                    <li class="nav-item active{{ current }}">
-                        <a href="{% url 'currentToDo' %}">Список дел</a>
+                    <li class="nav-item {{ current }}">
+                        <a class="nav-link" href="{% url 'currentToDo' %}">Список дел</a>
                     </li>
                     <li class="nav-item {{ completed }}">
-                        <a href="{% url 'completedTodo' %}">Выполненные</a>
+                        <a class="nav-link" href="{% url 'completedTodo' %}">Выполненные</a>
                     </li>
                     <li class="nav-item {{ create }}">
-                        <a href="{% url 'create' %}">Создать</a>
+                        <a class="nav-link" href="{% url 'create' %}">Создать</a>
                     </li>
 
                 </ul>
