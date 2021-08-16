@@ -135,4 +135,4 @@ def deleteTodo(request, todo_pk):
 @login_required
 def completedTodo(request):
     todos = Todo.objects.filter(user=request.user, dateCompleted__isnull=False).order_by('-dateCompleted')
-    return render(request, 'todo/completedTodo.html', {'todos': todos, 'completed': 'active'})
+    return render(request, 'todo/currentToDo.html', {'todos': todos, 'completed': 'active'})
