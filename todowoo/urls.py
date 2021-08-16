@@ -23,13 +23,16 @@ urlpatterns = [
     # authy
     path('signup/', views.signupUser, name='signupUser'),
     path('login/', views.loginUser, name='loginUser'),
+    path('logintestuser/', views.loginTestUser, name='loginTestUser'),
     path('logout/', views.logoutUser, name='logoutUser'),
 
     # todos
     path('currenttodo/', views.currentToDo, name='currentToDo'),
+    path('completedtodo/', views.completedTodo, name='completedTodo'),
     path('create/', views.create, name='create'),
-    path('todo/<int:todo_pk>', views.todo, name='todo'),
-    path('todo/<int:todo_pk>/complete', views.completeTodo, name='completeTodo'),
-    path('todo/<int:todo_pk>/delete', views.deleteTodo, name='deleteTodo'),
-    path('home/', views.home, name='home'),
+    path('viewtodo/<int:todo_pk>', views.viewTodo, name='viewTodo'),
+    path('viewtodo/<int:todo_pk>/complete', views.completeTodo, name='completeTodo'),
+    path('viewtodo/<int:todo_pk>/uncomplete', views.uncompleteTodo, name='uncompleteTodo'),
+    path('viewtodo/<int:todo_pk>/delete', views.deleteTodo, name='deleteTodo'),
+    path('', views.home, name='home'),
 ]

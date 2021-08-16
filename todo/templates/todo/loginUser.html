@@ -4,13 +4,36 @@
 Вход
 {% endblock %}
 
-{% block content %}
-<h1>Вход</h1>
-<h1>{{ error }}</h1>
-<form method="POST">
-    {{ form.as_p }}
-    {% csrf_token %}
-    <button type="submit">Войти</button>
-</form>
 
+{% block content %}
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-5">
+            <h2>Вход</h2>
+        </div>
+    </div>
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-5">
+            {% if error %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                </div>
+            {% endif %}
+            <form method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="username">Логин</label>
+                    <input type="text" name="username" class="form-control" id="username">
+                </div>
+                <div class="form-group">
+                    <label for="password">Пароль</label>
+                    <input type="password" name="password" class="form-control" id="password">
+                </div>
+                <button type="submit" class="btn btn-primary">Вход</button>
+            </form>
+            <hr>
+            <div class="text-center">
+                Нет аккаунта? <a href="{% url 'signupUser' %}">Регистрация</a>
+            </div>
+        </div>
+    </div>
 {% endblock %}

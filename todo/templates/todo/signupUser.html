@@ -1,16 +1,50 @@
 {% extends 'base.html' %}
 
 {% block title %}
-Регистрация
+    Регистрация
 {% endblock %}
 
-{% block content %}
-<h1>Регистрация</h1>
-<h1>{{ error }}</h1>
-<form method="POST">
-    {{ form.as_p }}
-    {% csrf_token %}
-    <button type="submit">Зарегистрироваться</button>
-</form>
 
+{% block content %}
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-5">
+            <h2>Регистрация</h2>
+        </div>
+    </div>
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-5">
+            {% if error %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                </div>
+            {% endif %}
+            <form method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="username">Логин</label>
+                    <input type="text" name="username" class="form-control" id="username"
+                           aria-describedby="usernameHelp">
+                    <small id="usernameHelp" class="form-text text-muted">Логин должен быть уникальным</small>
+                </div>
+                <div class="form-group">
+                    <label for="password1">Пароль</label>
+                    <input type="password" name="password1" class="form-control" id="password1">
+                </div>
+                <div class="form-group">
+                    <label for="password2">Повторите пароль</label>
+                    <input type="password" name="password2" class="form-control" id="password2">
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Регистрация</button>
+                </div>
+            </form>
+            <hr>
+            <div class="text-center">
+                Уже есть аккаунт <a href="{% url 'loginUser' %}">Вход</a><br>
+                <a href="{% url 'loginTestUser' %}">
+                    <button type="button" class="btn btn-info">Тестовый пользователь</button>
+                </a>
+            </div>
+        </div>
+    </div>
 {% endblock %}

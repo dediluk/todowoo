@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ todo.title }}
+{% endblock %}
+
+
+{% block content %}
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-5">
+            <h2>Новая задача</h2>
+        </div>
+    </div>
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-5">
+            {% if error %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                </div>
+            {% endif %}
+            <form method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="title">Заголовок</label>
+                    <input type="text" name="title" class="form-control" id="title" value="{{ todo.title }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="description">Описание</label>
+                    <textarea name="description" rows="5" class="form-control"
+                              id="description">{{ todo.description }}</textarea>
+                </div>
+                <div class="form-group form-check">
+                    <input type="checkbox" name="important" class="form-check-input" id="important"
+                           {% if todo.important %}checked{% endif %}>
+                    <label class="form-check-label" for="important">Приоритет</label>
+                </div>
+                <button type="submit" class="btn btn-primary" onclick="$('#save').click()">Сохранить</button>
+
+                {% if not todo.dateCompleted %}
+                    <button type="button" class="btn btn-success" onclick="$('#complete').click()">Выполнено</button>
+                {% else %}
+                    <button type="button" class="btn btn-success" onclick="$('#uncomplete').click()">Не выполнено
+                    </button>
+                {% endif %}
+                <button type="button" class="btn btn-danger" onclick="$('#delete').click()">Удалить</button>
+            </form>
+        </div>
+    </div>
+    <form style='display: none;' method="POST">
+        {% csrf_token %}
+        <button id="save" type="submit">Сохранить</button>
+    </form>
+    {% if todo.dateCompleted is None %}
+    <form style='display: none;' method="POST" action="{% url 'completeTodo' todo.id %}">
+        {% csrf_token %}
+        <button id="complete" type="submit">Complete</button>
+    </form>
+    {% endif %}
+    <form style='display: none;' method="POST" action="{% url 'uncompleteTodo' todo.id %}">
+        {% csrf_token %}
+        <button id="uncomplete" type="submit">Uncomplete</button>
+    </form>
+
+    <form style='display: none;' method="POST" action="{% url 'deleteTodo' todo.id %}">
+        {% csrf_token %}
+        <button id="delete" type="submit">Delete</button>
+    </form>
+{% endblock %}
