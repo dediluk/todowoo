@@ -46,7 +46,7 @@
             <ul class="navbar-nav ml-auto">
                 {% if user.is_authenticated %}
                     <li class="nav-item">
-                        <a href="#" onclick="$('#signOutBtn').click()" class="nav-link">Logout</a>
+                        <a href="#" onclick="$('#signOutBtn').click()" class="nav-link">Выйти</a>
                         <form style='display: none;' method="POST" action="{% url 'logoutUser' %}">
                             {% csrf_token %}
                             <button id="signOutBtn" type="submit">Выйти</button>
